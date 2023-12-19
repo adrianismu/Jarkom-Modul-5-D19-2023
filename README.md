@@ -79,3 +79,190 @@ dan berikut adalah IP yang didapatkan setiap node
 ### Subnetting
 
 Di bawah ini adalah pengelompokan subnet yang telah disesuaikan dengan alamat IP yang telah diperoleh.
+
+#### Aura
+```
+auto eth0
+iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet static
+	address 10.31.14.129
+	netmask 255.255.255.252
+
+auto eth2
+iface eth2 inet static
+	address 10.31.14.133
+	netmask 255.255.255.252
+```
+
+#### Heiter 
+```
+auto eth0
+iface eth0 inet static
+	address 10.31.14.130
+	netmask 255.255.255.252
+	gateway 10.31.14.129
+	up echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+auto eth1
+iface eth1 inet static
+	address 10.31.0.1
+	netmask 255.255.248.0
+
+auto eth2
+iface eth2 inet static
+	address 10.31.8.1
+	netmask 255.255.252.0
+```
+
+#### Frieren 
+```
+auto eth0
+iface eth0 inet static
+	address 10.31.14.134
+	netmask 255.255.255.252
+	gateway 10.31.14.133
+        up echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+auto eth1
+iface eth1 inet static
+	address 10.31.14.137
+	netmask 255.255.255.252
+
+auto eth2
+iface eth2 inet static
+	address 10.31.14.141
+	netmask 255.255.255.252
+```
+
+#### Himmel 
+
+```
+auto eth0
+iface eth0 inet static
+	address 10.31.14.142
+	netmask 255.255.255.252
+	gateway 10.31.14.141
+        up echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+auto eth1
+iface eth1 inet static
+	address 10.31.12.1
+	netmask 255.255.254.0
+
+auto eth2
+iface eth2 inet static
+	address 10.31.14.1
+	netmask 255.255.255.128
+```
+
+#### Fern 
+```
+auto eth0
+iface eth0 inet static
+	address 10.31.14.2
+	netmask 255.255.255.128
+	gateway 10.31.14.1
+        up echo nameserver 192.168.122.1 > /etc/resolv.conf
+
+auto eth1
+iface eth1 inet static
+	address 10.31.14.145
+	netmask 255.255.255.252
+
+auto eth2
+iface eth2 inet static
+	address 10.31.14.149
+	netmask 255.255.255.252
+```
+
+#### Revolte
+```
+auto eth0
+iface eth0 inet static
+	address 10.31.14.150
+	netmask 255.255.255.252
+	gateway 10.31.14.149
+        up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+#### Richter
+```
+auto eth0
+iface eth0 inet static
+	address 10.31.14.146
+	netmask 255.255.255.252
+	gateway 10.31.14.145
+        up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+#### Stark
+```
+auto eth0
+iface eth0 inet static
+	address 10.31.14.138
+	netmask 255.255.255.252
+	gateway 10.31.14.137
+	up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+#### Sein 
+```
+auto eth0
+iface eth0 inet static
+	address 10.31.8.2
+	netmask 255.255.252.0
+	gateway 10.31.8.1
+	up echo nameserver 192.168.122.1 > /etc/resolv.conf
+```
+
+#### Client 
+```
+auto eth0
+iface eth0 inet dhcp
+```
+
+### Routing
+
+#### Aura
+```bash
+route add -net 10.31.14.140 netmask 255.255.255.252 gw 10.31.14.134
+route add -net 10.31.14.136 netmask 255.255.255.252 gw 10.31.14.134
+route add -net 10.31.12.0   netmask 255.255.254.0 gw 10.31.14.134
+route add -net 10.31.14.0   netmask 255.255.255.128 gw 10.31.14.134
+route add -net 10.31.14.144 netmask 255.255.255.252 gw 10.31.14.134
+route add -net 10.31.14.148 netmask 255.255.255.252 gw 10.31.14.134
+
+route add -net 10.31.0.0 netmask 255.255.248.0 gw 10.31.14.130
+route add -net 10.31.8.0 netmask 255.255.252.0 gw 10.31.14.130
+```
+
+#### Heiter 
+```bash
+route add -net 0.0.0.0 netmask 0.0.0.0 gw 10.31.14.129
+```
+
+#### Frieren 
+```bash
+route add -net 0.0.0.0 netmask 0.0.0.0 gw 10.31.14.133
+
+route add -net 10.31.12.0   netmask 255.255.254.0 gw 10.31.14.142
+route add -net 10.31.14.0   netmask 255.255.255.128 gw 10.31.14.142
+route add -net 10.31.14.144 netmask 255.255.255.252 gw 10.31.14.142
+route add -net 10.31.14.148 netmask 255.255.255.252 gw 10.31.14.142
+```
+
+#### Himmel 
+
+```bash
+route add -net 0.0.0.0 netmask 0.0.0.0 gw 10.31.14.141
+
+route add -net 10.31.14.144 netmask 255.255.255.252 gw 10.31.14.2
+route add -net 10.31.14.148 netmask 255.255.255.252 gw 10.31.14.2
+```
+
+#### Fern 
+```bash
+route add -net 0.0.0.0 netmask 0.0.0.0 gw 10.31.14.1
+```
