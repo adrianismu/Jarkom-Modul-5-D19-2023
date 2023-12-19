@@ -442,6 +442,30 @@ iptables -t nat -A POSTROUTING -s 10.31.0.0/20 -o eth0 -j SNAT --to-source $IPET
 ![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/d08fed4c-906b-4b04-b320-9424effeb3b1)
 
 ## Soal 2
+> Kalian diminta untuk melakukan drop semua TCP dan UDP kecuali port 8080 pada TCP.
+### Script
+```bash
+iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
+iptables -A INPUT -p tcp -j DROP
+iptables -A INPUT -p udp -j DROP
+```
+
+* A INPUT: Menambahkan aturan ke dalam chain INPUT (untuk lalu lintas yang menuju sistem).
+* p tcp: Menentukan protokol yang digunakan, dalam hal ini TCP. --dport 8080: Menentukan port tujuan, yakni port 8080.
+* j ACCEPT: Menentukan tindakan yang diambil jika paket memenuhi kriteria aturan, dalam hal ini menerima paket.
+* j DROP: Menentukan tindakan yang diambil jika paket memenuhi kriteria aturan, dalam hal ini menolak (DROP) paket.
+
+### Output
+#### Sukses
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/38990fe5-f9bb-4d69-8c6a-c198a356c576)
+
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/843c839c-69b8-49c8-9890-0ef19e456d13)
+#### Gagal
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/37c6a550-6ea4-4c61-be01-09548f3431b9)
+
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/d1abedf6-e894-442a-aca9-b6ae4cb96f4f)
+
+
 
 ## Soal 3
 ## Soal 4
