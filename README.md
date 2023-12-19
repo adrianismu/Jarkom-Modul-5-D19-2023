@@ -266,3 +266,169 @@ route add -net 10.31.14.148 netmask 255.255.255.252 gw 10.31.14.2
 ```bash
 route add -net 0.0.0.0 netmask 0.0.0.0 gw 10.31.14.1
 ```
+### Konfigurasi
+
+#### DNS Server
+
+Router Richter bertindak sebagai server DNS dan akan diatur konfigurasinya menggunakan skrip bash yang akan disediakan.
+```bash
+apt-get update
+
+apt-get install bind9 -y
+
+service bind9 restart
+
+echo '
+options {
+        directory "/var/cache/bind";
+
+        forwarders {
+                192.168.122.1;
+        };
+
+        allow-query{any;};
+        auth-nxdomain no;
+        listen-on-v6 { any; };
+}; ' > /etc/bind/named.conf.options
+```
+
+#### DHCP Server
+Setelah menyelesaikan konfigurasi DNS Server, kami akan beralih ke konfigurasi yang diperlukan pada DHCP Server sebagai langkah selanjutnya.
+```bash
+apt-get update
+apt-get install isc-dhcp-server -y
+
+service isc-dhcp-server start
+
+echo '
+INTERFACESv4="eth0"
+' > /etc/default/isc-dhcp-server
+
+echo '
+option domain-name "example.org";
+option domain-name-servers ns1.example.org, ns2.example.org;
+
+default-lease-time 600;
+max-lease-time 7200;
+
+ddns-update-style none;
+
+subnet 10.31.14.128 netmask 255.255.255.252 {
+}
+
+subnet 10.31.14.132 netmask 255.255.255.252 {
+}
+
+subnet 10.31.14.136 netmask 255.255.255.252 {
+}
+
+subnet 10.31.14.140 netmask 255.255.255.252 {
+}
+
+subnet 10.31.14.144 netmask 255.255.255.252 {
+}
+
+subnet 10.31.14.148 netmask 255.255.255.252 {
+}
+
+subnet 10.31.14.0 netmask 255.255.255.128 {
+    range 10.31.14.4 10.31.14.67;
+    option routers 10.31.14.1;
+    option broadcast-address 10.31.14.127;
+    option domain-name-servers 10.31.14.146;
+    default-lease-time 720;
+    max-lease-time 5760;
+}
+
+subnet 10.31.12.0 netmask 255.255.254.0 {
+    range 10.31.12.2 10.31.13.1;
+    option routers 10.31.12.1;
+    option broadcast-address 10.31.13.255;
+    option domain-name-servers 10.31.14.146;
+    default-lease-time 720;
+    max-lease-time 5760;
+}
+
+subnet 10.31.0.0 netmask 255.255.248.0 {
+    range 10.31.0.2 10.31.4.4;
+    option routers 10.31.0.1;
+    option broadcast-address 10.31.7.255;
+    option domain-name-servers 10.31.14.146;
+    default-lease-time 720;
+    max-lease-time 5760;
+}
+
+subnet 10.31.8.0 netmask 255.255.252.0 {
+    range 10.31.8.3 10.31.10.5;
+    option routers 10.31.8.1;
+    option broadcast-address 10.31.11.255;
+    option domain-name-servers 10.31.14.146;
+    default-lease-time 720;
+    max-lease-time 5760;
+} ' > /etc/dhcp/dhcpd.conf
+
+service isc-dhcp-server restart
+```
+#### DHCP Relay
+
+DHCP Relay diaktifkan pada router `Heiter` dan `Himmel`. Heiter berlokasi dekat dengan klien `TurkRegion` dan `GrobeForest`, sementara `Himmel` berdekatan dengan `LaubHills` dan SchwerMountain. Pengaturannya adalah sebagai berikut:
+```bash
+apt-get update
+apt-get install isc-dhcp-relay -y
+
+echo '
+SERVERS="10.31.14.150"
+INTERFACES="eth0 eth1 eth2"
+OPTIONS="-m replace"
+' >  /etc/default/isc-dhcp-relay
+
+echo '
+net.ipv4.ip_forward=1
+' >  /etc/sysctl.conf
+
+service isc-dhcp-relay start
+```
+
+#### Web Server
+Di server web kami akan menggunakan Apache2 dan akan dikonfigurasi untuk router `Sein` dan `Stark` sesuai dengan instruksi berikut.
+```bash
+apt update
+apt install netcat -y
+apt install apache2 -y
+service apache2 start
+
+echo '# If you just change the port or add more ports here, you will likely also
+# have to change the VirtualHost statement in
+# /etc/apache2/sites-enabled/000-default.conf
+
+Listen 80
+Listen 443
+
+<IfModule ssl_module>
+        Listen 443
+</IfModule>
+
+<IfModule mod_gnutls.c>
+        Listen 443
+</IfModule>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet' > /etc/apache2/ports.conf
+```
+
+#### Client
+```bash
+apt update
+apt install netcat -y
+apt install lynx -y
+```
+
+### Soal 1
+### Soal 2
+### Soal 3
+### Soal 4
+### Soal 5
+### Soal 6
+### Soal 7
+### Soal 8
+### Soal 9
+### Soal 10
