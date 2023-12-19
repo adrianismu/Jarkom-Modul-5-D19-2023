@@ -468,6 +468,24 @@ iptables -A INPUT -p udp -j DROP
 
 
 ## Soal 3
+> Kepala Suku North Area meminta kalian untuk membatasi DHCP dan DNS Server hanya dapat dilakukan ping oleh maksimal 3 device secara bersamaan, selebihnya akan di drop.
+
+#### Script
+```
+iptables -I INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
+iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+```
+Penjelasan ini menggambarkan langkah-langkah dari perintah yang digunakan:
+
+* `I INPUT`: Menyisipkan aturan ke dalam awal chain INPUT.
+* `p icmp`: Menetapkan protokol yang dipakai, yaitu ICMP (Internet Control Message Protocol), yang umumnya digunakan untuk ping dan pesan kontrol jaringan.
+* `m connlimit`: Menggunakan modul connlimit untuk membatasi jumlah koneksi.
+* `--connlimit-above 3`: Menetapkan batas atas jumlah koneksi yang diizinkan. Aturan ini berupaya membatasi jumlah koneksi ICMP di atas 3.
+* `--connlimit-mask 0`: Menetapkan mask untuk mengidentifikasi koneksi. Dengan nilai 0, aturan ini akan membatasi jumlah koneksi berdasarkan alamat IP sumber.
+* `--state ESTABLISHED,RELATED`: Menetapkan bahwa aturan ini diterapkan pada paket yang terkait dengan koneksi yang sudah didirikan (ESTABLISHED) atau terkait dengan koneksi yang ada (RELATED), seperti paket respon terkait permintaan koneksi.
+* `m state`: Menggunakan modul state untuk mengelola status koneksi.
+* `j DROP`: Menentukan tindakan yang diambil jika batasan koneksi terlampaui, yaitu menolak (DROP) paket tersebut.
+
 ## Soal 4
 ## Soal 5
 ## Soal 6
