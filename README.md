@@ -470,8 +470,8 @@ iptables -A INPUT -p udp -j DROP
 ## Soal 3
 > Kepala Suku North Area meminta kalian untuk membatasi DHCP dan DNS Server hanya dapat dilakukan ping oleh maksimal 3 device secara bersamaan, selebihnya akan di drop.
 
-#### Script
-```
+### Script
+```bash
 iptables -I INPUT -p icmp -m connlimit --connlimit-above 3 --connlimit-mask 0 -j DROP
 iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 ```
@@ -486,6 +486,10 @@ Penjelasan ini menggambarkan langkah-langkah dari perintah yang digunakan:
 * `m state`: Menggunakan modul state untuk mengelola status koneksi.
 * `j DROP`: Menentukan tindakan yang diambil jika batasan koneksi terlampaui, yaitu menolak (DROP) paket tersebut.
 
+### Output
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/52d80643-d358-4f52-8644-3dd0ca3e4a35)
+
+Pada `GrobeForest` tidak berhasil melakukan ping karena `Richter` sudah mencapai 3 koneksi.
 ## Soal 4
 ## Soal 5
 ## Soal 6
