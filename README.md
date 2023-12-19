@@ -10,6 +10,8 @@ Anggota:
 
 ### Topologi
 
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/ddc63b4c-d205-4fde-b3c5-3a8141de735c)
+
 ### Rute
 
 | Subnet | Rute                                           | Jumlah IP | Netmask |
