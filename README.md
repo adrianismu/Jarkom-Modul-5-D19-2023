@@ -422,13 +422,32 @@ apt install netcat -y
 apt install lynx -y
 ```
 
-### Soal 1
-### Soal 2
-### Soal 3
-### Soal 4
-### Soal 5
-### Soal 6
-### Soal 7
-### Soal 8
-### Soal 9
-### Soal 10
+## Soal 1
+> Agar topologi yang kalian buat dapat mengakses keluar, kalian diminta untuk mengkonfigurasi Aura menggunakan iptables, tetapi tidak ingin menggunakan MASQUERADE.
+
+
+Dalam situasi ini, kita memiliki `Aura` dan koneksi terhubung melalui antarmuka `eth0`. Definisi ini dapat dimasukkan ke dalam suatu variabel. Variabel yang digunakan di sini disebut sebagai `IPETH0`.
+
+### Script
+```bash
+IPETH0=$(ifconfig eth0 | grep 'inet ' | awk '{print $2}' | cut -d' ' -f2 | cut -d'/' -f1)
+
+iptables -t nat -A POSTROUTING -s 10.31.0.0/20 -o eth0 -j SNAT --to-source $IPETH0
+```
+### Output
+#### Sebelum
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/67177a57-94cd-4424-8838-4424b3b6fab5)
+
+#### Sesudah
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/d08fed4c-906b-4b04-b320-9424effeb3b1)
+
+## Soal 2
+
+## Soal 3
+## Soal 4
+## Soal 5
+## Soal 6
+## Soal 7
+## Soal 8
+## Soal 9
+## Soal 10
