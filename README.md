@@ -527,6 +527,23 @@ iptables -A INPUT -j REJECT
 ![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/0c134fbc-edd7-408a-92aa-7da227e26c96)
 
 ## Soal 6
+> Lalu, karena ternyata terdapat beberapa waktu di mana network administrator dari WebServer tidak bisa stand by, sehingga perlu ditambahkan rule bahwa akses pada hari Senin - Kamis pada jam 12.00 - 13.00 dilarang (istirahat maksi cuy) dan akses di hari Jumat pada jam 11.00 - 13.00 juga dilarang (maklum, Jumatan rek).
+
+### Script
+```
+iptables -I INPUT 3 -m time --timestart 12:00 --timestop 13:00 --weekdays Mon,Tue,Wed,Thu -j REJECT
+iptables -I INPUT 4 -m time --timestart 11:00 --timestop 13:00 --weekdays Fri -j REJECT
+```
+
+### Output
+#### Istirahat Makan Siang
+
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/9fef0cf6-52e5-4852-9d7d-de03dc27fd6e)
+
+#### Waktu Jumatan
+
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/110a89d5-4b40-4286-902f-d845e8b48aa8)
+
 ## Soal 7
 ## Soal 8
 ## Soal 9
