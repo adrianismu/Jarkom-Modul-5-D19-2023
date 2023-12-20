@@ -491,7 +491,32 @@ Penjelasan ini menggambarkan langkah-langkah dari perintah yang digunakan:
 
 Pada `GrobeForest` tidak berhasil melakukan ping karena `Richter` sudah mencapai 3 koneksi.
 ## Soal 4
+> Lakukan pembatasan sehingga koneksi SSH pada Web Server hanya dapat dilakukan oleh masyarakat yang berada pada GrobeForest.
+
+### Script
+```bash
+iptables -A INPUT -p tcp --dport 22 -s 10.31.8.0/22 -j ACCEPT
+iptables -A INPUT -p tcp --dport 22 -j DROP
+```
+### Output
+#### GrobeForest
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/01eb3b98-37eb-428e-99fc-1cf9ca7a9ab4)
+
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/6d832a98-bc6e-4a3f-bd20-d2bcf147b650)
+
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/5016f4d6-011d-459a-81b6-021ac3363542)
+
+#### LaubHills
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/6279596e-ab3e-4c83-944e-40c07c51a059)
+
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/62ba7c17-5556-4965-beb9-50e47ab8bbf2)
+
 ## Soal 5
+> Selain itu, akses menuju WebServer hanya diperbolehkan saat jam kerja yaitu Senin-Jumat pada pukul 08.00-16.00. Pada Sein dan Stark
+
+### Script
+
+### Output
 ## Soal 6
 ## Soal 7
 ## Soal 8
