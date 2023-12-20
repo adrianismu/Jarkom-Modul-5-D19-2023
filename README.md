@@ -539,6 +539,23 @@ iptables -I INPUT 4 -m time --timestart 11:00 --timestop 13:00 --weekdays Fri -j
 dari hasil di atas, saya melakukan testing untuk output yang sukses dan output yang gagal dengan mengatur date pada node Sein
 
 ## Soal 7
+Untuk soal ini, kami belom bisa menyelesaikannya. Script yang kami gunakan belum bisa menghasilkan output yang diminta dalam soal
+### Script
+```bash
+iptables -A PREROUTING -t nat -p tcp --dport 80 -d 10.31.8.2 -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 10.31.8.2
+
+iptables -A PREROUTING -t nat -p tcp --dport 80 -d 10.31.8.2 -j DNAT --to-destination 10.31.14.128
+
+iptables -A PREROUTING -t nat -p tcp --dport 443 -d 10.31.14.128 -m statistic --mode nth --every 2 --packet 0 -j DNAT --to-destination 10.31.14.128
+
+iptables -A PREROUTING -t nat -p tcp --dport 443 -d 10.31.14.128 -j DNAT --to-destination 10.31.8.2
+
+while true; do nc -l -p 80 -c 'echo "ini sein"'; done dan while true; do nc -l -p 443 -c 'echo "ini stark"'; done
+
+while true; do nc -l -p 443 -c 'echo "ini sein"'; done dan while true; do nc -l -p 443 -c 'echo "ini stark"'; done
+```
+### Output
+![image](no7.jpeg)
 
 ## Soal 8
 Dalam soal, kita harus melakukan filter kepada node Revolte untuk mengakses Web Server
