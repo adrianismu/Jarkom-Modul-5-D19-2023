@@ -515,8 +515,17 @@ iptables -A INPUT -p tcp --dport 22 -j DROP
 > Selain itu, akses menuju WebServer hanya diperbolehkan saat jam kerja yaitu Senin-Jumat pada pukul 08.00-16.00. Pada Sein dan Stark
 
 ### Script
-
+```
+iptables -A INPUT -m time --timestart 08:00 --timestop 16:00 --weekdays Mon,Tue,Wed,Thu,Fri -j ACCEPT
+iptables -A INPUT -j REJECT
+```
 ### Output
+#### Saat Jam Kerja
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/61b9fceb-f379-4835-8672-3d844295daec)
+
+#### Saat Tidak Jam Kerja
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/0c134fbc-edd7-408a-92aa-7da227e26c96)
+
 ## Soal 6
 ## Soal 7
 ## Soal 8
