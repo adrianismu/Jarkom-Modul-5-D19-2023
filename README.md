@@ -527,25 +527,60 @@ iptables -A INPUT -j REJECT
 ![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/0c134fbc-edd7-408a-92aa-7da227e26c96)
 
 ## Soal 6
-> Lalu, karena ternyata terdapat beberapa waktu di mana network administrator dari WebServer tidak bisa stand by, sehingga perlu ditambahkan rule bahwa akses pada hari Senin - Kamis pada jam 12.00 - 13.00 dilarang (istirahat maksi cuy) dan akses di hari Jumat pada jam 11.00 - 13.00 juga dilarang (maklum, Jumatan rek).
-
+Dalam soal, kita disuruh untuk menambah jam istirahat pada Web Server dengan tambahan jam makan siang.
 ### Script
-```
+```bash
 iptables -I INPUT 3 -m time --timestart 12:00 --timestop 13:00 --weekdays Mon,Tue,Wed,Thu -j REJECT
 iptables -I INPUT 4 -m time --timestart 11:00 --timestop 13:00 --weekdays Fri -j REJECT
 ```
-
 ### Output
-#### Istirahat Makan Siang
-
-![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/9fef0cf6-52e5-4852-9d7d-de03dc27fd6e)
-
-#### Waktu Jumatan
-
-![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/1f27ff95-358f-4093-a4ac-44c35790c1c2)
-
+![image](no.6(1).png)
+![image](no6(2).png)
+dari hasil di atas, saya melakukan testing untuk output yang sukses dan output yang gagal dengan mengatur date pada node Sein
 
 ## Soal 7
+
 ## Soal 8
+Dalam soal, kita harus melakukan filter kepada node Revolte untuk mengakses Web Server
+### Script
+```bash
+Revolte_Subnet="10.31.14.148/30"
+
+Pemilu_Start=$(date -d "2023-10-19T00:00" +"%Y-%m-%dT%H:%M")
+
+Pemilu_End=$(date -d "2024-02-15T00:00" +"%Y-%m-%dT%H:%M")
+
+iptables -A INPUT -p tcp -s $Revolte_Subnet --dport 80 -m time --datestart "$Pemilu_Start" --datestop "$Pemilu_End" -j DROP
+```
+Lalu setelah itu kita lakukan testing pada Revolte dan Client
+### Output
+![image](no8(1).png)
+![image](no8(2).png)
+
 ## Soal 9
+Dalam soal, kita harus melakukan DROP pada IP yang melakukan scanning port lebih dari 20 dalam waktu 10 menit
+### Script
+```bash
+iptables -N scan_port
+
+iptables -A INPUT -m recent --name scan_port --update --seconds 600 --hitcount 20 -j DROP
+
+iptables -A FORWARD -m recent --name scan_port --update --seconds 600 --hitcount 20 -j DROP
+
+iptables -A INPUT -m recent --name scan_port --set -j ACCEPT
+
+iptables -A FORWARD -m recent --name scan_port --set -j ACCEPT
+```
+Lalu kita bisa melakukan testing dengan cara ping Sein sebanyak 25 kali
+### Output
+![image](no9.png)
+
 ## Soal 10
+Dalam soal, kita harus membuat log untuk menampilkan paket apa saja yang didrop
+### Script
+```bash
+iptables -A INPUT  -j LOG --log-level debug --log-prefix 'Dropped Packet' -m limit --limit 1/second --limit-burst 10
+```
+Lalu gunakan command iptables -L
+### Output
+![image](no10.png)
