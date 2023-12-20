@@ -574,6 +574,7 @@ iptables -A FORWARD -m recent --name scan_port --set -j ACCEPT
 Lalu kita bisa melakukan testing dengan cara ping Sein sebanyak 25 kali
 ### Output
 ![image](no9.png)
+bisa kita lihat setelah ping ke 20 maka akan otomatis stop
 
 ## Soal 10
 Dalam soal, kita harus membuat log untuk menampilkan paket apa saja yang didrop
