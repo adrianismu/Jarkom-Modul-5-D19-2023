@@ -542,7 +542,8 @@ iptables -I INPUT 4 -m time --timestart 11:00 --timestop 13:00 --weekdays Fri -j
 
 #### Waktu Jumatan
 
-![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/110a89d5-4b40-4286-902f-d845e8b48aa8)
+![image](https://github.com/adrianismu/Jarkom-Modul-5-D19-2023/assets/71255346/1f27ff95-358f-4093-a4ac-44c35790c1c2)
+
 
 ## Soal 7
 ## Soal 8
